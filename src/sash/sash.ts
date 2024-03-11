@@ -88,7 +88,7 @@ export class Sash extends EventEmitter implements Disposable {
   private hoverDelay = 300;
   private hoverDelayer = debounce(
     (el) => el.classList.add("sash-hover", styles.hover),
-    this.hoverDelay
+    this.hoverDelay,
   );
 
   private _state: SashState = SashState.Enabled;
@@ -127,7 +127,7 @@ export class Sash extends EventEmitter implements Disposable {
   constructor(
     container: HTMLElement,
     layoutProvider: VerticalSashLayoutProvider,
-    options: SashOptions
+    options: SashOptions,
   );
 
   /**
@@ -140,12 +140,12 @@ export class Sash extends EventEmitter implements Disposable {
   constructor(
     container: HTMLElement,
     layoutProvider: HorizontalSashLayoutProvider,
-    options: SashOptions
+    options: SashOptions,
   );
   constructor(
     container: HTMLElement,
     layoutProvider: SashLayoutProvider,
-    options: SashOptions
+    options: SashOptions,
   ) {
     super();
 
@@ -191,8 +191,9 @@ export class Sash extends EventEmitter implements Disposable {
       this.el.classList.remove("sash-horizontal", styles.horizontal);
       this.el.classList.add("sash-vertical", styles.vertical);
     }
-
-    this.layout();
+    setTimeout(() => {
+      this.layout();
+    });
   }
 
   private onPointerStart = (event: PointerEvent) => {

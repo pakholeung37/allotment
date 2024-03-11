@@ -1,5 +1,5 @@
 {
-  "name": "allotment",
+  "name": "@pakholeung37/allotment",
   "version": "1.20.0",
   "description": "React split-pane component",
   "exports": {

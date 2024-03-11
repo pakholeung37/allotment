@@ -157,11 +157,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
     const [dimensionsInitialized, setDimensionsInitialized] = useState(false);
 
-    if (process.env.NODE_ENV !== "production" && sizes) {
-      console.warn(
-        `Prop sizes is deprecated. Please use defaultSizes instead.`,
-      );
-    }
+    // if (process.env.NODE_ENV !== "production" && sizes) {
+    //   console.warn(
+    //     `Prop sizes is deprecated. Please use defaultSizes instead.`,
+    //   );
+    // }
 
     const childrenArray = useMemo(
       () => React.Children.toArray(children).filter(React.isValidElement),
@@ -220,36 +220,54 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       const options: SplitViewOptions = {
         orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
         proportionalLayout,
-        ...(initializeSizes &&
-          defaultSizes && {
-            descriptor: {
-              size: defaultSizes.reduce((a, b) => a + b, 0),
-              views: defaultSizes.map((size, index) => {
-                const props = splitViewPropsRef.current.get(
-                  previousKeys.current[index],
-                );
-
-                const view = new PaneView(layoutService.current, {
-                  element: document.createElement("div"),
-                  minimumSize: props?.minSize ?? minSize,
-                  maximumSize: props?.maxSize ?? maxSize,
-                  priority: props?.priority ?? LayoutPriority.Normal,
-                  ...(props?.preferredSize && {
-                    preferredSize: props?.preferredSize,
+        // use old sizes if they exist, otherwise use default sizes
+        ...(splitViewRef.current
+          ? {
+              descriptor: {
+                size: splitViewRef.current
+                  .getViewSizes()
+                  .reduce((a, b) => a + b, 0),
+                views: splitViewRef.current
+                  .getViewSizes()
+                  .map((size, index) => {
+                    return {
+                      container: [...splitViewViewRef.current.values()][index],
+                      size: size,
+                      view: views.current[index],
+                    };
                   }),
-                  snap: props?.snap ?? snap,
-                });
+              },
+            }
+          : initializeSizes &&
+            defaultSizes && {
+              descriptor: {
+                size: defaultSizes.reduce((a, b) => a + b, 0),
+                views: defaultSizes.map((size, index) => {
+                  const props = splitViewPropsRef.current.get(
+                    previousKeys.current[index],
+                  );
 
-                views.current.push(view);
+                  const view = new PaneView(layoutService.current, {
+                    element: document.createElement("div"),
+                    minimumSize: props?.minSize ?? minSize,
+                    maximumSize: props?.maxSize ?? maxSize,
+                    priority: props?.priority ?? LayoutPriority.Normal,
+                    ...(props?.preferredSize && {
+                      preferredSize: props?.preferredSize,
+                    }),
+                    snap: props?.snap ?? snap,
+                  });
 
-                return {
-                  container: [...splitViewViewRef.current.values()][index],
-                  size: size,
-                  view: view,
-                };
-              }),
-            },
-          }),
+                  views.current.push(view);
+
+                  return {
+                    container: [...splitViewViewRef.current.values()][index],
+                    size: size,
+                    view: view,
+                  };
+                }),
+              },
+            }),
       };
 
       splitViewRef.current = new SplitView(
