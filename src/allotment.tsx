@@ -499,11 +499,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       },
     });
 
-    useEffect(() => {
-      if (isIOS) {
-        setSashSize(20);
-      }
-    }, []);
+    // useEffect(() => {
+    //   if (isIOS) {
+    //     setSashSize(20);
+    //   }
+    // }, []);
 
     return (
       <div

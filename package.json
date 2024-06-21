@@ -1,6 +1,6 @@
 {
   "name": "@pakholeung37/allotment",
-  "version": "1.22.0",
+  "version": "1.22.1",
   "description": "React split-pane component",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
