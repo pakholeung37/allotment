@@ -17,7 +17,7 @@ import { isIOS } from "./helpers/platform";
 import useIsomorphicLayoutEffect from "./helpers/use-isomorphic-layout-effect";
 import { LayoutService } from "./layout-service";
 import { PaneView } from "./pane-view";
-import { Orientation, setGlobalSashSize } from "./sash";
+import { Orientation } from "./sash";
 import {
   LayoutPriority,
   Sizing,
@@ -591,8 +591,6 @@ export function setSashSize(sashSize: number) {
     "--sash-hover-size",
     hoverSize + "px",
   );
-
-  setGlobalSashSize(size);
 }
 
 export default Object.assign(Allotment, { Pane: Pane });

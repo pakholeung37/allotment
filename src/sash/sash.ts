@@ -51,13 +51,6 @@ export enum SashState {
 
 let globalSize = isIOS ? 20 : 8;
 
-const onDidChangeGlobalSize = new EventEmitter();
-
-export function setGlobalSashSize(size: number): void {
-  globalSize = size;
-  onDidChangeGlobalSize.emit("onDidChangeGlobalSize", size);
-}
-
 export interface SashLayoutProvider {}
 
 /** A vertical sash layout provider provides position and height for a sash. */
@@ -174,10 +167,10 @@ export class Sash extends EventEmitter implements Disposable {
     } else {
       this.size = globalSize;
 
-      onDidChangeGlobalSize.on("onDidChangeGlobalSize", (size) => {
-        this.size = size;
-        this.layout();
-      });
+      // onDidChangeGlobalSize.on("onDidChangeGlobalSize", (size) => {
+      //   this.size = size;
+      //   this.layout();
+      // });
     }
 
     this.layoutProvider = layoutProvider;
