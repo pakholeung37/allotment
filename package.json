@@ -1,6 +1,6 @@
 {
   "name": "@pakholeung37/allotment",
-  "version": "1.24.0",
+  "version": "1.24.1",
   "description": "React split-pane component",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
@@ -24,10 +24,7 @@
   "license": "MIT",
   "homepage": "https://allotment.mulberryhousesoftware.com/",
   "files": [
-    "dist/*.mjs",
-    "dist/*.js",
-    "dist/*.css",
-    "dist/types/src/**/*.d.ts"
+    "dist"
   ],
   "dependencies": {
     "classnames": "^2.3.0",
